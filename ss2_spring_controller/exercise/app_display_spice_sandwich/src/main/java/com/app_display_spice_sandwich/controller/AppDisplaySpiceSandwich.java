@@ -8,12 +8,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class AppDisplaySpiceSandwich {
     @GetMapping
-    public String showList(){
+    public String showList() {
         return "sandwich";
     }
+
     @GetMapping("/display")
-    public String showListSpice(@RequestParam("condiment") String[] condiment, Model model){
-        model.addAttribute("condiment",condiment);
+    public String showListSpice(@RequestParam(value = "condiment", required = false) String[] condiment, Model model) {
+        model.addAttribute("condiment", condiment);
         return "sandwich";
     }
 }
