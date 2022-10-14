@@ -13,12 +13,11 @@
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 
-    <!--Khai báo DispatcherServlet, và cho nó khởi chạy cùng lúc với server-->
     <servlet>
         <servlet-name>dispatcher</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
-        <!-- 1 nghia la load tai thoi diem khoi dong server, neu khong cai dat hoac = 0 thhi se load khi co request goi toi severlet-->
+
     </servlet>
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
