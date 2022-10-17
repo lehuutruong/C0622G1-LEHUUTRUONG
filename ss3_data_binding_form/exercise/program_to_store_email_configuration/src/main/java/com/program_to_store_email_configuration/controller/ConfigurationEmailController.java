@@ -23,7 +23,7 @@ public class ConfigurationEmailController {
     }
 
     @PostMapping("/home")
-    public String updateMailBox(@ModelAttribute("mail") Configuration configuration, Model model) {
+    public String update(@ModelAttribute("mail") Configuration configuration, Model model) {
         model.addAttribute("message", "Update success");
         return "update";
     }
