@@ -69,7 +69,7 @@ public class ProductController {
     }
 
     @GetMapping("/search")
-    public String searchByName(@RequestParam(value = "searchName") String name, Model model) {
+    public String searchByName(@RequestParam(value = "searchName",defaultValue = "") String name, Model model) {
         model.addAttribute("product", productService.findByName(name));
         return ("index");
     }
