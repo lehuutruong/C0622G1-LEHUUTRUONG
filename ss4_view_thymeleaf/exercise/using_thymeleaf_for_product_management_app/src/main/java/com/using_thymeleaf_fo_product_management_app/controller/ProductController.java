@@ -1,7 +1,7 @@
 package com.using_thymeleaf_fo_product_management_app.controller;
 
 import com.using_thymeleaf_fo_product_management_app.model.Product;
-import com.using_thymeleaf_fo_product_management_app.service.impl.ProductService;
+import com.using_thymeleaf_fo_product_management_app.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,19 +14,19 @@ import java.util.List;
 @RequestMapping("/product")
 public class ProductController {
     @Autowired
-    ProductService productService;
+    IProductService productService;
 
     @GetMapping("")
     public String index(Model model) {
         List<Product> productList = productService.findAll();
         model.addAttribute("product", productList);
-        return "index";
+        return "product/index";
     }
 
     @GetMapping("/create")
     public String showCreate(Model model) {
         model.addAttribute("product", new Product());
-        return "create";
+        return "product/create";
     }
 
     @PostMapping("/save")
@@ -39,20 +39,20 @@ public class ProductController {
     @GetMapping("{id}/edit")
     public String showUpdate(@PathVariable int id, Model model) {
         model.addAttribute("product", productService.findById(id));
-        return ("edit");
+        return ("product/edit");
     }
 
     @PostMapping("/update")
     public String update(Product product, RedirectAttributes redirectAttributes) {
         productService.update(product.getId(), product);
         redirectAttributes.addFlashAttribute("message", "Edit success");
-        return "redirect:/product";
+        return ("redirect:/product");
     }
 
     @GetMapping("{id}/delete")
     public String showDelete(@PathVariable int id, Model model) {
         model.addAttribute("product", productService.findById(id));
-        return ("delete");
+        return ("product/delete");
     }
 
     @PostMapping("/remove")
@@ -65,12 +65,12 @@ public class ProductController {
     @GetMapping("{id}/view")
     public String view(@PathVariable int id, Model model) {
         model.addAttribute("product", productService.findById(id));
-        return ("view");
+        return ("product/view");
     }
 
     @GetMapping("/search")
     public String searchByName(@RequestParam(value = "searchName",defaultValue = "") String name, Model model) {
         model.addAttribute("product", productService.findByName(name));
-        return ("index");
+        return ("product/index");
     }
 }

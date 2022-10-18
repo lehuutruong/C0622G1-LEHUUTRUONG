@@ -1,7 +1,7 @@
 package com.using_thymeleaf_fo_product_management_app.service.impl;
 
 import com.using_thymeleaf_fo_product_management_app.model.Product;
-import com.using_thymeleaf_fo_product_management_app.repository.impl.ProductRepository;
+import com.using_thymeleaf_fo_product_management_app.repository.IProductRepository;
 import com.using_thymeleaf_fo_product_management_app.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 public class ProductService implements IProductService {
     @Autowired
-    ProductRepository productRepository;
+    IProductRepository productRepository;
 
     @Override
     public List<Product> findAll() {
