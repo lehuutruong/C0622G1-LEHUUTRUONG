@@ -15,8 +15,9 @@ public class AppBlog {
     @JoinColumn(name = "categrory_id", referencedColumnName = "id")
     private Category category;
     @ManyToMany
-    @JoinTable(name = "blog_admin",joinColumns = @JoinColumn(name="app_blog_id"),inverseJoinColumns = @JoinColumn(name = "admin_id"))
+    @JoinTable(name = "blog_admin", joinColumns = @JoinColumn(name = "app_blog_id"), inverseJoinColumns = @JoinColumn(name = "admin_id"))
     private Set<Admin> adminList;
+
     public AppBlog() {
     }
 
@@ -75,15 +76,5 @@ public class AppBlog {
         this.adminList = adminList;
     }
 
-    @Override
-    public String toString() {
-        return "AppBlog{" +
-                "id=" + id +
-                ", author='" + author + '\'' +
-                ", content='" + content + '\'' +
-                ", dateOfWriting='" + dateOfWriting + '\'' +
-                ", category=" + category +
-                ", adminList=" + adminList +
-                '}';
-    }
+
 }

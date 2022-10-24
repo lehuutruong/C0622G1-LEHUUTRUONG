@@ -24,6 +24,17 @@
         <lable>dateOfWriting</lable>
         <input type="text" th:field="*{dateOfWriting}">
     </div>
+    <div>
+        <lable>Category Name</lable>
+        <select th:field="*{category}">
+            <option th:each="item : ${categoryList}" th:value="${item.id}" th:text="${item.nameCategory}"></option>
+        </select>
+    </div>
+    <div>
+        <lable>Admin Name:</lable>
+        <input type="checkbox" th:field="*{adminList}" th:each="item : ${admin}" th:text="${item.nameAdmin}"
+               th:value="${item.id}"/>
+    </div>
     <input type="submit" value="Edit">
 </form>
 </body>

@@ -5,6 +5,9 @@ import com.example.demo.service.IAdminService;
 import com.example.demo.service.IAppBlogService;
 import com.example.demo.service.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.List;
 
 @Controller
 @RequestMapping("/home")
@@ -26,20 +28,20 @@ public class AppBlogController {
 
     @Autowired
     IAdminService adminService;
+
     @GetMapping("")
-    public String index(Model model) {
-        List<AppBlog> appBlogs = appBlogService.findAll();
-//        model.addAttribute("adminList",admin)
+    public String index(@PageableDefault(value = 3) Pageable pageable, Model model) {
+        Page<AppBlog> appBlogs = appBlogService.findAll(pageable);
         model.addAttribute("blog", appBlogs);
-        return "home";
+        return "homeAppBlog";
     }
 
     @GetMapping("/create")
     public String showCreate(Model model) {
-        model.addAttribute("categoryList",categoryService.findAll());
-        model.addAttribute("admin",adminService.findAll());
+        model.addAttribute("categoryList", categoryService.findAll());
+        model.addAttribute("admin", adminService.findAll());
         model.addAttribute("blog", new AppBlog());
-        return "create";
+        return "createAppBlog";
     }
 
     @PostMapping("/save")
@@ -52,7 +54,7 @@ public class AppBlogController {
     @GetMapping("{id}/delete")
     public String showDelete(@PathVariable int id, Model model) {
         model.addAttribute("blog", appBlogService.findById(id));
-        return "delete";
+        return "deleteAppBlog";
     }
 
     @PostMapping("/remove")
@@ -64,13 +66,22 @@ public class AppBlogController {
 
     @GetMapping("{id}/edit")
     public String showUpdate(@PathVariable int id, Model model) {
+        model.addAttribute("categoryList", categoryService.findAll());
+        model.addAttribute("admin", adminService.findAll());
         model.addAttribute("blog", appBlogService.findById(id));
-        return ("edit");
+        return ("editAppBlog");
     }
 
     @PostMapping("/update")
     public String update(AppBlog appBlog) {
         appBlogService.update(appBlog);
         return ("redirect:/home");
+    }
+    @GetMapping("{id}/view")
+    public String showView(@PathVariable int id, Model model) {
+        model.addAttribute("categoryList", categoryService.findAll());
+        model.addAttribute("admin", adminService.findAll());
+        model.addAttribute("blog", appBlogService.findById(id));
+        return ("viewAppBlog");
     }
 }

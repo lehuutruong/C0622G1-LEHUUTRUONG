@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create</title>
+</head>
+<body>
+<h3>View Category</h3>
+<p>
+    <a th:href="@{/category}">
+        Back to product list
+    </a>
+</p>
+<div th:object="${category}">
+    <div>
+        <lable> Id</lable>
+        <lable th:field="*{id}"></lable>
+    </div>
+    <div>
+        <label> Name</label>
+        <lable th:field="*{nameCategory}"></lable>
+    </div>
+</div>
+</body>
+</html>
