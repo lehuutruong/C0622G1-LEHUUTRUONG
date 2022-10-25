@@ -10,8 +10,8 @@ public interface ISongService {
 
     void create(Song song);
 
-    SongDto findById(int id);
+    Song findById(int id);
 
-    void update(SongDto songDto);
+    void update(Song song);
 
 }

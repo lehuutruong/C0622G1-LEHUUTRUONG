@@ -52,18 +52,20 @@ public class SongController {
     }
 
     @GetMapping("{id}/edit")
-    public String showUpdate(@PathVariable int id, Model model) {
-        model.addAttribute("song", iSongService.findById(id));
+    public String showUpdateForm(@PathVariable int id, Model model) {
+        Song song = iSongService.findById(id);
+        model.addAttribute("song", song );
         return ("edit");
     }
 
     @PostMapping("/update")
-    public String update(@Validated @ModelAttribute SongDto songDto,
+    public String update(@Validated @ModelAttribute("song") SongDto songDto,
                          BindingResult bindingResult,
                          RedirectAttributes redirectAttributes,
                          Model model) {
         new SongDto().validate(songDto, bindingResult);
         if (bindingResult.hasFieldErrors()) {
+
             return ("edit");
         } else {
             Song song = new Song();

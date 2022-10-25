@@ -22,7 +22,7 @@
             <td th:text="${row.getSongName()}"></td>
             <td th:text="${row.getArtist()}"></td>
             <td th:text="${row.getKindOfMusic()}"></td>
-            <td><a th:href="@{/song/{id}/edit(id=${row.getSongName()})}">Edit</a></td>
+            <td><a th:href="@{/song/{id}/edit(id=${row.getId()})}">Edit</a></td>
         </tr>
         </tbody>
     </table>
