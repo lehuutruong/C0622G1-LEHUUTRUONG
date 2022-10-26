@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User List</title>
+</head>
+<body>
+<div>
+    <table border="1">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>NAME</th>
+            <th>AUTHOR</th>
+            <th>COUNT</th>
+            <th>ACTION</th>
+            <th>ACTION</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="row : ${list}">
+            <td th:text="${row.getId()}"></td>
+            <td th:text="${row.getName()}"></td>
+            <td th:text="${row.getAuthor()}"></td>
+            <td th:text="${row.getCount()}"></td>
+            <td><a th:href="@{/home/{id}/oder(id=${row.getId()})}">Oder</a></td>
+            <td><a th:href="@{/home/{id}/pay(id=${row.getId()})}">Pay</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div>
+    <a th:if="${list.hasPrevious()}" th:href="@{'/home'(page=${list.number - 1})}">Previous</a>
+    <span th:text="${list.number + 1}"></span>/<span th:text="${list.totalPages}"></span>
+    <a th:if="${list.hasNext()}" th:href="@{'/home'(page=${list.number + 1})}">Next</a>
+</div>
+</body>
+</html>
