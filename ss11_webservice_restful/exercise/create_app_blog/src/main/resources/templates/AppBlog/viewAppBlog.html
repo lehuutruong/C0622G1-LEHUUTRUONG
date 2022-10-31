@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create</title>
+</head>
+<body>
+<h3>View AppBlog</h3>
+<p>
+    <a th:href="@{/home}">
+        Back to product list
+    </a>
+</p>
+<div th:object="${blog}">
+    <div>
+        <lable> Id</lable>
+        <lable th:field="*{id}"></lable>
+    </div>
+    <div>
+        <label> Name</label>
+        <lable type="text" th:field="*{author}"></lable>
+    </div>
+      <div>
+        <label> content</label>
+        <input type="text" th:field="*{content}">
+    </div>
+    <div>
+        <label> dateOfWriting</label>
+        <input type="text" th:field="*{dateOfWriting}">
+    </div>
+    <div>
+        <lable>Category Name</lable>
+        <select th:field="*{category}">
+            <option th:each="item : ${categoryList}" th:value="${item.id}" th:text="${item.nameCategory}"></option>
+        </select>
+    </div>
+    <div>
+        <lable>Admin Name:</lable>
+        <input type="checkbox" th:field="*{adminList}" th:each="item : ${admin}" th:text="${item.nameAdmin}" th:value="${item.id}"/>
+    </div>
+</div>
+</body>
+</html>
