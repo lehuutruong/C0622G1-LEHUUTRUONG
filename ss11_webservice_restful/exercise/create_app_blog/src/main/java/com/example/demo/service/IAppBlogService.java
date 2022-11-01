@@ -19,4 +19,6 @@ public interface IAppBlogService {
     void update(AppBlog appBlog);
 
     List<AppBlog> findListByCategoryId(int id);
+
+    List<AppBlog> findByAuthor(String author);
 }

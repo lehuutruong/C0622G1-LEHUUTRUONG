@@ -50,4 +50,9 @@ public class AppBlogService implements IAppBlogService {
     public List<AppBlog> findListByCategoryId(int id) {
         return iAppBlogRepository.findByCategoryId(id);
     }
+
+    @Override
+    public List<AppBlog> findByAuthor(String author) {
+        return iAppBlogRepository.findByAuthorContains(author);
+    }
 }

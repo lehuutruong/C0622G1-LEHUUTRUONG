@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Show blog list</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<h1>Blog list</h1>
+
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
+    Create Blog
+</button>
+<input type="text" name="nameSearch" placeholder="Input name" id="authorSearch">
+<input type="submit" value="Search" id="search">
+<table class="table table-success table-striped">
+    <thead>
+    <tr>
+        <td>Author</td>
+        <td>Content</td>
+        <td>Date Of Writing</td>
+        <td>Category</td>
+        <td>Admin</td>
+        <td>Delete</td>
+        <td>View</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>
+            <span>Loading...</span>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Create new Blog</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table>
+                    <tr>
+                        <td>Athour:</td>
+                        <td><input type="text" id="txtName"></td>
+                    </tr>
+                    <tr>
+                        <td>Content:</td>
+                        <td><input type="text" id="txtContent"></td>
+                    </tr>
+                    <tr>
+                        <td>Date Of Writing:</td>
+                        <td><input type="text" id="txtImage"></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="btnCreate">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function () {
+        function init() {
+            setTimeout(function () {
+                $("tbody").empty();
+                $.ajax({
+                    url: "http://localhost:8080/api/home/v1",
+                    type: "GET",
+                    dataType: "json",
+                    success: function (data) {
+                        let tr = [];
+                        for (let i = 0; i < data.length; i++) {
+                            tr.push("<tr>")
+                            tr.push("<td>" + data[i].author + "</td>");
+                            tr.push("<td>" + data[i].content + "</td>");
+                            tr.push("<td>" + data[i].dateOfWriting + "</td>");
+                            tr.push("</tr>")
+                        }
+                        $("tbody").append(tr.join(""));
+                    }
+                })
+            }, 2000);
+        }
+
+        $("#btnCreate").click(function () {
+            let txtAuthor = $("#txtAuthor").val();
+            let txtContent = $("#txtContent").val();
+            let txtDateOfWriting = $("#txtDateOfWriting").val();
+            $.ajax({
+                url: "http://localhost:8080/api/home/v1",
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                data: JSON.stringify('author', txtAuthor, 'content', txtContent, 'dateOfWriting', txtDateOfWriting),
+                success: function () {
+                    $("#modalCreate").modal('hide');
+                    $("tbody").empty();
+                    $("tbody").append("Loading...")
+                    init();
+                }
+            })
+        })
+        init();
+        $("#search").click(function () {
+            $("tbody").empty();
+            let searchAuthor =$("#authorSearch").val();
+            $.ajax({
+                url: "http://localhost:8080/api/home/v1/search?author="+searchAuthor,
+                type: "GET",
+               dateType:"json",
+                success: function (dataSearch) {
+                   let tr=[]
+                    for (let i = 0; i <dataSearch.length ; i++) {
+                        tr.push("<tr>")
+                        tr.push("<td>" + dataSearch[i].author + "</td>");
+                        tr.push("<td>" + dataSearch[i].content + "</td>");
+                        tr.push("<td>" + dataSearch[i].dateOfWriting + "</td>");
+                        tr.push("</tr>")
+                    }
+                    $("tbody").append(tr.join(""));
+                }
+            })
+        })
+        $("#loading").click(function() {
+            $.ajax({
+                url: "http://localhost:8080/api/home/v1"+"?page="+ $("#pageNumber").val(),
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    let tr = [];
+                    for (let i = 0; i < data.length; i++) {
+                        tr.push("<tr>")
+                        tr.push("<td>" + data[i].author + "</td>");
+                        tr.push("<td>" + data[i].content + "</td>");
+                        tr.push("<td>" + data[i].dateOfWriting + "</td>");
+                        tr.push("</tr>")
+                    }
+                    $("tbody").append(tr.join(""));
+                    $("#pageNumber").val($("#pageNumber").val()+1)
+                }
+            })
+        })
+        init();
+    })
+</script>
+</body>
+</html>

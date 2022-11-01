@@ -84,4 +84,9 @@ public class AppBlogController {
         model.addAttribute("blog", appBlogService.findById(id));
         return ("AppBlog/viewAppBlog");
     }
+
+    @GetMapping("/blog")
+    public String showListJquery() {
+        return "listAppBlogJquery";
+    }
 }

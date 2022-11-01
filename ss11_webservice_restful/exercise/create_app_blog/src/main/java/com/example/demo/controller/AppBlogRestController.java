@@ -13,9 +13,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
-
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/home/v1")
 public class AppBlogRestController {
@@ -25,12 +26,12 @@ public class AppBlogRestController {
     private CategoryService categoryService;
 
     @GetMapping
-    public ResponseEntity<Page<AppBlog>> getAppBlogList(Pageable pageable) {
+    public ResponseEntity<List<AppBlog>> getAppBlogList(Pageable pageable) {
         Page<AppBlog> appBlogList = appBlogService.findAll(pageable);
         if (appBlogList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<>(appBlogList, HttpStatus.OK);
+        return new ResponseEntity<>(appBlogList.getContent(), HttpStatus.OK);
     }
 
     @PostMapping
@@ -70,5 +71,12 @@ public class AppBlogRestController {
         }
         return new ResponseEntity<>(blogList, HttpStatus.OK);
     }
-
+    @GetMapping("/search")
+    public ResponseEntity<List<AppBlog>> searchAppBlog(@RequestParam String author){
+    List<AppBlog> searchAppBlog = appBlogService.findByAuthor(author);
+    if (searchAppBlog==null) {
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+    return new ResponseEntity<>(searchAppBlog, HttpStatus.OK);
+    }
 }
