@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create</title>
+</head>
+<body>
+<h3>Add Product</h3>
+<p>
+    <a th:href="@{/customer}">
+        Back to product list
+    </a>
+</p>
+<form th:action="@{/customer/update}" method="post" th:object="${customerList}">
+    <input type="hidden" th:field="*{id}">
+    <div>
+        <label> Name</label>
+        <input type="text" th:field="*{name}">
+    </div>
+    <div>
+        <label> Date Of Birth</label>
+        <input type="text" th:field="*{dateOfBirth}">
+    </div>
+    <div>
+        <label> Gender</label>
+        <input type="text" th:field="*{gender}">
+    </div>
+    <div>
+        <label> IdCard</label>
+        <input type="text" th:field="*{idCard}">
+    </div>
+    <div>
+        <label> Phone Number</label>
+        <input type="text" th:field="*{phoneNumber}">
+    </div>
+    <div>
+        <label> Email</label>
+        <input type="text" th:field="*{email}">
+    </div>
+    <div>
+        <label> Address</label>
+        <input type="text" th:field="*{address}">
+    </div>
+    <div>
+        <lable>CustomerType</lable>
+        <select th:field="*{customerTypeList}">
+            <option th:each="item : ${customerTypeList}" th:value="${item.id}" th:text="${item.name}"></option>
+        </select>
+    </div>
+    <input type="submit" value="Save">
+</form>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en"xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+<h1>Home</h1>
+<div sec:authorize="isAuthenticated()">
+    <h2>You login</h2>
+    <h2>Hi welcome:
+    <span style="color: #1e7e34" sec:authentication="principal.username"></span>
+    </h2>
+    <div sec:authorize="hasRole('ADMIN')" style="color: red">
+        <span>EDIT</span>
+        <span>CREATE</span>
+        <span>DELETE</span>
+    </div>
+    <div sec:authorize="hasRole('USER')" style="color: green">
+        <span>VIEW</span>
+    </div>
+</div>
+</body>
+</html>
