@@ -14,9 +14,9 @@ public interface ICustomerService {
 
     void update(Customer customer);
 
-    Page<Customer> findByNameAndEmailAndCustomerType(String name, String email, String customerTypeId, String status, Pageable pageable);
+    Page<Customer> findByNameAndEmailAndCustomerType(String name, String email, String customerTypeList, String deleteStatus, Pageable pageable);
 
-    Page<Customer> findByNameAndEmail(String name, String email, String status, Pageable pageable);
+    Page<Customer> findByNameAndEmail(String name, String email, String deleteStatus, Pageable pageable);
 
-    Page<Customer> findByStatus(String status, Pageable pageable);
+    Page<Customer> findByStatus(String deleteStatus, Pageable pageable);
 }

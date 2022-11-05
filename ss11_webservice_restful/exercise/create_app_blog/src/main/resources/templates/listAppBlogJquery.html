@@ -20,7 +20,7 @@
 <table class="table table-success table-striped">
     <thead>
     <tr>
-        <td>Author</td>
+        <td>Name</td>
         <td>Content</td>
         <td>Date Of Writing</td>
         <td>Category</td>
@@ -47,7 +47,7 @@
             <div class="modal-body">
                 <table>
                     <tr>
-                        <td>Athour:</td>
+                        <td>Name:</td>
                         <td><input type="text" id="txtName"></td>
                     </tr>
                     <tr>
@@ -56,7 +56,7 @@
                     </tr>
                     <tr>
                         <td>Date Of Writing:</td>
-                        <td><input type="text" id="txtImage"></td>
+                        <td><input type="text" id="txtDateOfWriting"></td>
                     </tr>
                 </table>
             </div>
@@ -84,7 +84,7 @@
                         let tr = [];
                         for (let i = 0; i < data.length; i++) {
                             tr.push("<tr>")
-                            tr.push("<td>" + data[i].author + "</td>");
+                            tr.push("<td>" + data[i].name + "</td>");
                             tr.push("<td>" + data[i].content + "</td>");
                             tr.push("<td>" + data[i].dateOfWriting + "</td>");
                             tr.push("</tr>")
@@ -96,14 +96,14 @@
         }
 
         $("#btnCreate").click(function () {
-            let txtAuthor = $("#txtAuthor").val();
+            let txtName = $("#txtName").val();
             let txtContent = $("#txtContent").val();
             let txtDateOfWriting = $("#txtDateOfWriting").val();
             $.ajax({
                 url: "http://localhost:8080/api/home/v1",
                 type: "POST",
                 contentType: "application/json;charset=utf-8",
-                data: JSON.stringify('author', txtAuthor, 'content', txtContent, 'dateOfWriting', txtDateOfWriting),
+                data: JSON.stringify('name', txtName, 'content', txtContent, 'dateOfWriting', txtDateOfWriting),
                 success: function () {
                     $("#modalCreate").modal('hide');
                     $("tbody").empty();
@@ -115,16 +115,16 @@
         init();
         $("#search").click(function () {
             $("tbody").empty();
-            let searchAuthor =$("#authorSearch").val();
+            let searchName =$("#authorSearch").val();
             $.ajax({
-                url: "http://localhost:8080/api/home/v1/search?author="+searchAuthor,
+                url: "http://localhost:8080/api/home/v1/search?name="+searchName,
                 type: "GET",
                dateType:"json",
                 success: function (dataSearch) {
                    let tr=[]
                     for (let i = 0; i <dataSearch.length ; i++) {
                         tr.push("<tr>")
-                        tr.push("<td>" + dataSearch[i].author + "</td>");
+                        tr.push("<td>" + dataSearch[i].name + "</td>");
                         tr.push("<td>" + dataSearch[i].content + "</td>");
                         tr.push("<td>" + dataSearch[i].dateOfWriting + "</td>");
                         tr.push("</tr>")
@@ -142,7 +142,7 @@
                     let tr = [];
                     for (let i = 0; i < data.length; i++) {
                         tr.push("<tr>")
-                        tr.push("<td>" + data[i].author + "</td>");
+                        tr.push("<td>" + data[i].name + "</td>");
                         tr.push("<td>" + data[i].content + "</td>");
                         tr.push("<td>" + data[i].dateOfWriting + "</td>");
                         tr.push("</tr>")

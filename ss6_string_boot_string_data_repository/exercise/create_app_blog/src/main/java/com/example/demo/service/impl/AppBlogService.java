@@ -31,13 +31,16 @@ public class AppBlogService implements IAppBlogService {
 
     @Override
     public AppBlog findById(int id) {
-        return iAppBlogRepository.findById(id).orElse(null);
+        AppBlog appBlog =iAppBlogRepository.findById(id).orElse(new AppBlog());
+        Optional<AppBlog> optionalAppBlog=iAppBlogRepository.findById(id);
+        if ((optionalAppBlog.isPresent())){
+            appBlog=optionalAppBlog.get();
+        }
+        return appBlog;
     }
 
     @Override
     public void update(AppBlog appBlog) {
         iAppBlogRepository.save(appBlog);
     }
-
-
 }

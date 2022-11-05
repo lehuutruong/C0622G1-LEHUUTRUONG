@@ -11,7 +11,7 @@ public class AppBlog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String author;
+    private String name;
     private String content;
     private String dateOfWriting;
     @ManyToOne
@@ -28,9 +28,9 @@ public class AppBlog {
     public AppBlog() {
     }
 
-    public AppBlog(int id, String author, String content, String dateOfWriting) {
+    public AppBlog(int id, String name, String content, String dateOfWriting) {
         this.id = id;
-        this.author = author;
+        this.name = name;
         this.content = content;
         this.dateOfWriting = dateOfWriting;
     }
@@ -43,12 +43,12 @@ public class AppBlog {
         this.id = id;
     }
 
-    public String getAuthor() {
-        return author;
+    public String getName() {
+        return name;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getContent() {

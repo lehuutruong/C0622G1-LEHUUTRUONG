@@ -69,7 +69,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="row : ${appBlog}">
+        <tr th:each="row : ${blog}">
             <td th:text="${row.getId()}"></td>
             <td th:text="${row.getAuthor()}"></td>
             <td th:text="${row.getContent()}"></td>

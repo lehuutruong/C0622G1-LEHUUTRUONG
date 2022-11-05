@@ -41,17 +41,17 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public Page<Customer> findByNameAndEmailAndCustomerType(String name, String email, String customerTypeId, String status, Pageable pageable) {
-        return iCustomerRepository.findByNameAndEmailAndCustomerTypeId(name,email,customerTypeId,status,pageable);
+    public Page<Customer> findByNameAndEmailAndCustomerType(String name, String email, String customerTypeList, String deleteStatus, Pageable pageable) {
+        return iCustomerRepository.findByNameAndEmailAndCustomerTypeId(name,email,customerTypeList,deleteStatus,pageable);
     }
 
     @Override
-    public Page<Customer> findByNameAndEmail(String name, String email, String status, Pageable pageable) {
-        return iCustomerRepository.findPageNameAndEmail(name,email,status,pageable);
+    public Page<Customer> findByNameAndEmail(String name, String email, String deleteStatus, Pageable pageable) {
+        return iCustomerRepository.findPageNameAndEmail(name,email,deleteStatus,pageable);
     }
 
     @Override
-    public Page<Customer> findByStatus(String status, Pageable pageable) {
-        return iCustomerRepository.findPageStatus(status,pageable);
+    public Page<Customer> findByStatus(String deleteStatus, Pageable pageable) {
+        return iCustomerRepository.findPageStatus(deleteStatus,pageable);
     }
 }

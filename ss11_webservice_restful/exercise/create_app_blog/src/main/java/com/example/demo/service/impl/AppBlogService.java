@@ -52,7 +52,7 @@ public class AppBlogService implements IAppBlogService {
     }
 
     @Override
-    public List<AppBlog> findByAuthor(String author) {
-        return iAppBlogRepository.findByAuthorContains(author);
+    public List<AppBlog> findByName(String name) {
+        return iAppBlogRepository.findByNameContains(name);
     }
 }

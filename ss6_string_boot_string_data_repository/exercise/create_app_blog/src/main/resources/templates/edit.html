@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head">
+<head>
     <meta charset="UTF-8">
     <title>Edit</title>
 </head>
@@ -13,15 +13,15 @@
 <form th:action="@{/home/update}" method="post" th:object="${blog}">
     <input type="hidden" th:field="*{id}">
     <div>
-        <lable>Name</lable>
+        <lable>author</lable>
         <input type="text" th:field="*{author}">
     </div>
     <div>
-        <lable>Price</lable>
+        <lable>content</lable>
         <input type="number" th:field="*{content}">
     </div>
     <div>
-        <lable>Company</lable>
+        <lable>dateOfWriting</lable>
         <input type="text" th:field="*{dateOfWriting}">
     </div>
     <input type="submit" value="Edit">

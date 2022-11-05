@@ -35,22 +35,22 @@ public class CustomerController {
     public String showList(@RequestParam(value = "page", defaultValue = "0") Integer page,
                            @RequestParam(name = "name", defaultValue = "") String name,
                            @RequestParam(name = "email", defaultValue = "") String email,
-                           @RequestParam(name = "customerTypeList", defaultValue = "") String customerTypeId,
-                           @RequestParam(name = "deleteStatus", defaultValue = "1") String status,
+                           @RequestParam(name = "customerTypeList", defaultValue = "") String customerTypeList,
+                           @RequestParam(name = "deleteStatus", defaultValue = "1") String deleteStatus,
                            Model model) {
         Sort sort = Sort.by("name").ascending();
-        model.addAttribute("customerTypeList", iCustomerTypeService.findAll());
+        model.addAttribute("customerType", iCustomerTypeService.findAll());
         model.addAttribute("name", name);
         model.addAttribute("email", email);
-        model.addAttribute("customerTypeId", customerTypeId);
-        if (customerTypeId.equals("") && name.equals("") && email.equals("")) {
-            model.addAttribute("customerPage", iCustomerService.findByStatus(status, PageRequest.of(page, 5, sort)));
-        } else if (customerTypeId.equals("")) {
-            model.addAttribute("customerPage", iCustomerService.findByNameAndEmail(name, email, status, PageRequest.of(page, 5, sort)));
+        model.addAttribute("customerTypeList", customerTypeList);
+        if (customerTypeList.equals("") && name.equals("") && email.equals("")) {
+            model.addAttribute("customerList", iCustomerService.findByStatus(deleteStatus, PageRequest.of(page, 5, sort)));
+        } else if (customerTypeList.equals("")) {
+            model.addAttribute("customerList", iCustomerService.findByNameAndEmail(name, email, deleteStatus, PageRequest.of(page, 5, sort)));
         } else {
-            model.addAttribute("customerPage", iCustomerService.findByNameAndEmailAndCustomerType(name, email, status, customerTypeId, PageRequest.of(page, 5, sort)));
+            model.addAttribute("customerList", iCustomerService.findByNameAndEmailAndCustomerType(name, email, deleteStatus, customerTypeList, PageRequest.of(page, 5, sort)));
         }
-        return "/customer/list";
+        return "/customer/customerList";
     }
 
     @GetMapping("/create")
@@ -82,6 +82,14 @@ public class CustomerController {
         BeanUtils.copyProperties(customerDto, customer);
         iCustomerService.update(customer);
         redirectAttributes.addFlashAttribute("messUpdate", "Update Success");
+        return "redirect:/customer";
+    }
+    @GetMapping("/delete")
+    public String delete(@RequestParam(value = "delete") int id,RedirectAttributes redirectAttributes){
+        Customer customer=iCustomerService.findById(id);
+        customer.setDeleteStatus(0);
+        iCustomerService.update(customer);
+        redirectAttributes.addFlashAttribute("mess","delete Success!!");
         return "redirect:/customer";
     }
 }

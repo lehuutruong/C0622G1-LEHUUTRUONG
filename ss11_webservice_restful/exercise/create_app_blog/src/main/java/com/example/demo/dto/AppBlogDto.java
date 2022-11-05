@@ -2,16 +2,16 @@ package com.example.demo.dto;
 
 public class AppBlogDto {
     private int id;
-    private String author;
+    private String name;
     private String content;
     private String dateOfWriting;
 
     public AppBlogDto() {
     }
 
-    public AppBlogDto(int id, String author, String content, String dateOfWriting) {
+    public AppBlogDto(int id, String name, String content, String dateOfWriting) {
         this.id = id;
-        this.author = author;
+        this.name = name;
         this.content = content;
         this.dateOfWriting = dateOfWriting;
     }
@@ -24,12 +24,12 @@ public class AppBlogDto {
         this.id = id;
     }
 
-    public String getAuthor() {
-        return author;
+    public String getName() {
+        return name;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setName(String ame) {
+        this.name = name;
     }
 
     public String getContent() {

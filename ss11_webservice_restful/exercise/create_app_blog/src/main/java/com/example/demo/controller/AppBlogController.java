@@ -18,7 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 @Controller
-@RequestMapping("/home")
+@RequestMapping("home")
 public class AppBlogController {
     @Autowired
     IAppBlogService appBlogService;
@@ -29,14 +29,14 @@ public class AppBlogController {
     @Autowired
     IAdminService adminService;
 
-    @GetMapping("")
+    @GetMapping()
     public String index(@PageableDefault(value = 3) Pageable pageable, Model model) {
         Page<AppBlog> appBlogs = appBlogService.findAll(pageable);
         model.addAttribute("blog", appBlogs);
         return "AppBlog/homeAppBlog";
     }
 
-    @GetMapping("/create")
+    @GetMapping("create")
     public String showCreate(Model model) {
         model.addAttribute("categoryList", categoryService.findAll());
         model.addAttribute("admin", adminService.findAll());
@@ -44,7 +44,7 @@ public class AppBlogController {
         return "AppBlog/createAppBlog";
     }
 
-    @PostMapping("/save")
+    @PostMapping("save")
     public String save(AppBlog appBlog, RedirectAttributes redirectAttributes) {
         appBlogService.create(appBlog);
         redirectAttributes.addFlashAttribute("mess", "Add success");
@@ -57,7 +57,7 @@ public class AppBlogController {
         return "AppBlog/deleteAppBlog";
     }
 
-    @PostMapping("/remove")
+    @PostMapping("remove")
     public String delete(AppBlog appBlog, RedirectAttributes redirectAttributes) {
         appBlogService.remove(appBlog);
         redirectAttributes.addFlashAttribute("messDelete", "Delete success");
@@ -72,11 +72,12 @@ public class AppBlogController {
         return ("AppBlog/editAppBlog");
     }
 
-    @PostMapping("/update")
+    @PostMapping("update")
     public String update(AppBlog appBlog) {
         appBlogService.update(appBlog);
         return ("redirect:/home");
     }
+
     @GetMapping("{id}/view")
     public String showView(@PathVariable int id, Model model) {
         model.addAttribute("categoryList", categoryService.findAll());
@@ -89,4 +90,6 @@ public class AppBlogController {
     public String showListJquery() {
         return "listAppBlogJquery";
     }
+
 }
+

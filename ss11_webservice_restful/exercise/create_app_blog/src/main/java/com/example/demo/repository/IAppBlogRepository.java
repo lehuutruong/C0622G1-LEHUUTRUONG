@@ -15,5 +15,5 @@ public interface IAppBlogRepository extends JpaRepository<AppBlog, Integer> {
     @Query(value= "SELECT * FROM app_blog WHERE category_id = :keyword", nativeQuery=true)
     List<AppBlog> findByCategoryId(@Param("keyword") int categoryId);
 
-    List<AppBlog> findByAuthorContains(String author);
+    List<AppBlog> findByNameContains(String name);
 }

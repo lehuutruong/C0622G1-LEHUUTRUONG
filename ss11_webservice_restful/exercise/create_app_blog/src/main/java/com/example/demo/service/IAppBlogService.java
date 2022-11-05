@@ -20,5 +20,5 @@ public interface IAppBlogService {
 
     List<AppBlog> findListByCategoryId(int id);
 
-    List<AppBlog> findByAuthor(String author);
+    List<AppBlog> findByName(String name);
 }

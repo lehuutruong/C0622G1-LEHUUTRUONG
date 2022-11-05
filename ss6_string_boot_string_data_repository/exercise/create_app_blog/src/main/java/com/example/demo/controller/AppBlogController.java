@@ -22,7 +22,7 @@ public class AppBlogController {
     @GetMapping("")
     public String index(Model model) {
         List<AppBlog> appBlogs = appBlogService.findAll();
-        model.addAttribute("appBlog", appBlogs);
+        model.addAttribute("blog", appBlogs);
         return "home";
     }
 
@@ -41,8 +41,8 @@ public class AppBlogController {
 
     @GetMapping("{id}/delete")
     public String showDelete(@PathVariable int id, Model model) {
-        model.addAttribute("blog", appBlogService.findById(id));
-        return ("delete");
+        model.addAttribute("blog",appBlogService.findById(id));
+        return "delete";
     }
 
     @PostMapping("/remove")
@@ -51,6 +51,7 @@ public class AppBlogController {
         redirectAttributes.addFlashAttribute("messDelete", "Delete success");
         return "redirect:/home";
     }
+
     @GetMapping("{id}/edit")
     public String showUpdate(@PathVariable int id, Model model) {
         model.addAttribute("blog", appBlogService.findById(id));

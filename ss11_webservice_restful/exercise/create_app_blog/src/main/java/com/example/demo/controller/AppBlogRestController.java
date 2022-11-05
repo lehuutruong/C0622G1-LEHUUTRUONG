@@ -13,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin("*")
@@ -72,8 +71,8 @@ public class AppBlogRestController {
         return new ResponseEntity<>(blogList, HttpStatus.OK);
     }
     @GetMapping("/search")
-    public ResponseEntity<List<AppBlog>> searchAppBlog(@RequestParam String author){
-    List<AppBlog> searchAppBlog = appBlogService.findByAuthor(author);
+    public ResponseEntity<List<AppBlog>> searchAppBlog(@RequestParam String name){
+    List<AppBlog> searchAppBlog = appBlogService.findByName(name);
     if (searchAppBlog==null) {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }

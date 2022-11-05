@@ -60,7 +60,7 @@
         <thead>
         <tr>
             <th>Id</th>
-            <th>Author</th>
+            <th>Name</th>
             <th>Content</th>
             <th>Date of writing</th>
             <th>Category</th>
@@ -73,12 +73,11 @@
         <tbody>
         <tr th:each="row : ${blog}">
             <td th:text="${row.getId()}"></td>
-            <td th:text="${row.getAuthor()}"></td>
+            <td th:text="${row.getName()}"></td>
             <td th:text="${row.getContent()}"></td>
             <td th:text="${row.getDateOfWriting()}"></td>
-            <td th:text="${row.category.nameCategory}"></td>
-            <td><span th:each="item : ${row.adminList}" th:text="${item.nameAdmin + ' '}" th:value="${item.id}"></span>
-            </td>
+            <td><span th:each="item : ${row.category}" th:text="${item.nameCategory + ' '}" th:value="${item.id}"></span></td>
+            <td><span th:each="item : ${row.adminList}" th:text="${item.nameAdmin + ' '}" th:value="${item.id}"></span></td>
             <td><a th:href="@{/home/{id}/edit(id=${row.getId()})}">Edit</a></td>
             <td><a th:href="@{/home/{id}/delete(id=${row.getId()})}">Delete</a></td>
             <td><a th:href="@{/home/{id}/view(id=${row.getId()})}">View</a></td>

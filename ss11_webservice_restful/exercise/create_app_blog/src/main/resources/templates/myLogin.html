@@ -2,9 +2,37 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>My Login</title>
 </head>
 <body>
-$END$
+<form action="/login" method="post">
+    <table>
+        <tr>
+            <td>NameLogin</td>
+            <td>
+                <input type="text" name="username">
+            </td>
+        </tr>
+        <tr>
+            <td>Password</td>
+            <td>
+                <input type="text" name="password">
+            </td>
+        </tr>
+        <tr>
+            <td>Keep Login</td>
+            <td>
+                <input type="checkbox" name="remember-me">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button type="submit">
+                    Login
+                </button>
+            </td>
+        </tr>
+    </table>
+</form>
 </body>
 </html>
