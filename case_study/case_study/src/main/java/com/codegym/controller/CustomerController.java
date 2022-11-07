@@ -29,8 +29,8 @@ public class CustomerController {
                                                  @PageableDefault(value = 3) Pageable pageable) {
         ModelAndView modelAndView = new ModelAndView("customer/customerList");
         modelAndView.addObject("customerList", iCustomerService.search(nameSearch, email, customerType, pageable));
-        modelAndView.addObject("customerType", iCustomerTypeService.findAll());
-        modelAndView.addObject("customerTypes", customerType);
+        modelAndView.addObject("customerTypeList", iCustomerTypeService.findAll());
+        modelAndView.addObject("customerType", customerType);
         modelAndView.addObject("email", email);
         modelAndView.addObject("nameSearch", nameSearch);
         return modelAndView;

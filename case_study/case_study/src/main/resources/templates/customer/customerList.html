@@ -49,7 +49,7 @@
 
                     <select style="width: 20%" th:name="customerType">
                         <option  value="" selected>Choose Something</option>
-                        <option th:each="item : ${customerType}" th:value="${item.id}" th:text="${item.name}"></option>
+                        <option th:each="item : ${customerTypeList}" th:value="${item.name}" th:text="${item.name}"></option>
                     </select>
 
                     <input type="submit" value="Search" style="width: 10%">

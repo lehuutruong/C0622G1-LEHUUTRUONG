@@ -48,7 +48,7 @@
 
                     <select style="width: 20%" th:name="facilityType">
                         <option value="" selected>Choose</option>
-                        <option th:each="item : ${facilityTypeList}" th:value="${item.id}" th:text="${item.name}"></option>
+                        <option th:each="item : ${facilityTypeList}" th:value="${item.name}" th:text="${item.name}"></option>
                     </select>
 
                     <input type="submit" value="Search" style="width: 10%">
