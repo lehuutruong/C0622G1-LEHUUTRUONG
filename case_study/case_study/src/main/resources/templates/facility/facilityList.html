@@ -44,10 +44,11 @@
                     </li>
                 </ul>
                 <form action="/facility">
-                    <input style="width: 20%" type="text" name="nameSearch" placeholder="Name">
+                    <input style="width: 20%" type="text" name="nameSearch" placeholder="Name" th:value="${nameSearch}">
 
                     <select style="width: 20%" th:name="facilityType">
-                        <option value="" selected>Choose</option>
+                        <option th:if="${facilityType!=''}" th:text="${facilityType}"></option>
+                        <option value="">All</option>
                         <option th:each="item : ${facilityTypeList}" th:value="${item.name}" th:text="${item.name}"></option>
                     </select>
 

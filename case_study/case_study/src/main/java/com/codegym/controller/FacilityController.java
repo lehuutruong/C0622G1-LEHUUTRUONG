@@ -29,7 +29,7 @@ public class FacilityController {
     @GetMapping
     public ModelAndView showFacilityList(@RequestParam(value = "nameSearch", defaultValue = "") String nameSearch,
                                          @RequestParam(value = "facilityType", defaultValue = "") String facilityType,
-                                         @PageableDefault(value = 3) Pageable pageable) {
+                                         @PageableDefault(value = 3) Pageable pageable,Model model) {
         ModelAndView modelAndView = new ModelAndView("facility/facilityList");
         modelAndView.addObject("facilityList", iFacilityService.search(nameSearch,facilityType, pageable));
         modelAndView.addObject("rentType",iRentTypeService.finAll());
