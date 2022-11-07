@@ -22,7 +22,7 @@ public class Customer {
     private CustomerType customerTypeList;
     @OneToMany(mappedBy = "customer")
     private Set<Contract> contractList;
-    private int deleteStatus;
+    private int deleteStatus=1;
     public Customer() {
     }
 

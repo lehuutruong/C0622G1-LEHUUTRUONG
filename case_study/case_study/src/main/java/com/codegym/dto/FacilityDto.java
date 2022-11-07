@@ -1,14 +1,9 @@
-package com.codegym.model.facility;
+package com.codegym.dto;
 
-import com.codegym.model.contract.Contract;
+import com.codegym.model.facility.FacilityType;
+import com.codegym.model.facility.RentType;
 
-import javax.persistence.*;
-import java.util.Set;
-
-@Entity
-public class Facility {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class FacilityDto {
     private int id;
     private String name;
     private double cost;
@@ -18,16 +13,11 @@ public class Facility {
     private double poolArea;
     private int numberOfFloors;
     private String facilityFree;
-    @ManyToOne
-    @JoinColumn(name = "rent_type_id", referencedColumnName = "id")
     private RentType rentType;
-    @ManyToOne
-    @JoinColumn(name = "facility_type_id", referencedColumnName = "id")
     private FacilityType facilityType;
-    @OneToMany(mappedBy = "facility")
-    private Set<Contract> contractList;
     private int deleteStatus=1;
-    public Facility() {
+
+    public FacilityDto() {
     }
 
     public int getId() {
@@ -116,14 +106,6 @@ public class Facility {
 
     public void setFacilityType(FacilityType facilityType) {
         this.facilityType = facilityType;
-    }
-
-    public Set<Contract> getContractList() {
-        return contractList;
-    }
-
-    public void setContractList(Set<Contract> contractList) {
-        this.contractList = contractList;
     }
 
     public int getDeleteStatus() {

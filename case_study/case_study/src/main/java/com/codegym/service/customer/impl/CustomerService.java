@@ -1,8 +1,8 @@
-package com.codegym.service.impl;
+package com.codegym.service.customer.impl;
 
 import com.codegym.model.customer.Customer;
-import com.codegym.repository.ICustomerRepository;
-import com.codegym.service.ICustomerService;
+import com.codegym.repository.customer.ICustomerRepository;
+import com.codegym.service.customer.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -41,17 +41,8 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public Page<Customer> findByNameAndEmailAndCustomerType(String name, String email, String customerTypeList, String deleteStatus, Pageable pageable) {
-        return iCustomerRepository.findByNameAndEmailAndCustomerTypeId(name,email,customerTypeList,deleteStatus,pageable);
+    public Page<Customer> search(String nameSearch, String email, String customerType, Pageable pageable) {
+        return iCustomerRepository.findByNameAndEmailAndCustomerTypeId(nameSearch,email,customerType,pageable);
     }
 
-    @Override
-    public Page<Customer> findByNameAndEmail(String name, String email, String deleteStatus, Pageable pageable) {
-        return iCustomerRepository.findPageNameAndEmail(name,email,deleteStatus,pageable);
-    }
-
-    @Override
-    public Page<Customer> findByStatus(String deleteStatus, Pageable pageable) {
-        return iCustomerRepository.findPageStatus(deleteStatus,pageable);
-    }
 }

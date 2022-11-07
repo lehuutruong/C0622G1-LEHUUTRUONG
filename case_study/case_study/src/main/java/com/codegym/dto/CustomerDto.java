@@ -1,9 +1,7 @@
 package com.codegym.dto;
 
-import com.codegym.model.contract.Contract;
 import com.codegym.model.customer.CustomerType;
 
-import java.util.Set;
 
 public class CustomerDto {
     private int id;
@@ -15,7 +13,7 @@ public class CustomerDto {
     private String email;
     private String address;
     private CustomerType customerTypeList;
-    private int deleteStatus;
+    private int deleteStatus=1;
 
     public CustomerDto() {
     }

@@ -16,13 +16,11 @@
             a matter of hours to help you.</p>
         <div class="row">
             <div class="col-md-9 mb-md-0 mb-5">
-                <form id="contact-form" name="contact-form" th:action="@{/customer/save}" method="post" th:object="${customerList}">
+                <form id="contact-form" name="contact-form" th:action="@{/facility/update}" method="post"
+                      th:object="${facilityList}">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="md-form mb-0">
-                                <input type="hidden" th:field="*{id}" id="id" name="id" class="form-control">
-                                <label for="subject" class="">Gender</label>
-                            </div>
+                            <input type="hidden" th:field="*{id}" id="id" name="id" class="form-control">
                         </div>
                     </div>
                     <div class="row">
@@ -34,69 +32,91 @@
                         </div>
                         <div class="col-md-6">
                             <div class="md-form mb-0">
-                                <input type="text" th:field="*{dateOfBirth}" id="email" name="email"
+                                <input type="text" th:field="*{cost}" id="cost" name="cost"
                                        class="form-control">
-                                <label for="email" class="">Date Of Birth </label>
+                                <label for="cost" class="">Cost </label>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="md-form mb-0">
-                                <input type="text" th:field="*{gender}" id="subject" name="subject"
+                                <input type="text" th:field="*{maxPeople}" id="maxPeople" name="maxPeople"
                                        class="form-control">
-                                <label for="subject" class="">Gender</label>
+                                <label for="maxPeople" class="">Max People</label>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="md-form">
-                            <textarea type="text" th:field="*{idCard}" id="message" name="message" rows="2"
+                            <textarea type="text" th:field="*{standardRoom}" id="standardRoom" name="standardRoom"
+                                      rows="2"
                                       class="form-control md-textarea"></textarea>
-                                <label for="message">Id Card</label>
+                                <label for="standardRoom">Standard Room</label>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="md-form">
-                            <textarea type="text" th:field="*{phoneNumber}" id="message" name="message" rows="2"
+                            <textarea type="text" th:field="*{descriptionOtherConvenience}"
+                                      id="descriptionOtherConvenience" name="descriptionOtherConvenience" rows="2"
                                       class="form-control md-textarea"></textarea>
-                                <label for="message">Phone Number</label>
+                                <label for="descriptionOtherConvenience">descriptionOtherConvenience</label>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="md-form">
-                            <textarea type="text" th:field="*{email}" id="message" name="message" rows="2"
+                            <textarea type="text" th:field="*{poolArea}" id="poolArea" name="poolArea" rows="2"
                                       class="form-control md-textarea"></textarea>
-                                <label for="message">Email</label>
+                                <label for="poolArea">PoolArea</label>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="md-form">
-                            <textarea type="text" th:field="*{address}" id="message" name="message" rows="2"
+                            <textarea type="text" th:field="*{numberOfFloors}" id="message" name="message" rows="2"
                                       class="form-control md-textarea"></textarea>
-                                <label for="message">Address</label>
+                                <label for="message">NumberOfFloors</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="md-form">
+                            <textarea type="text" th:field="*{facilityFree}" id="p" name="poolArea" rows="2"
+                                      class="form-control md-textarea"></textarea>
+                                <label for="poolArea">FacilityFree</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div>
+                            <div class="col-md-6">
+                                <select th:field="*{facilityType}">
+                                    <option th:each="item : ${facilityTypeList}" th:value="${item.id}"
+                                            th:text="${item.name}"></option>
+                                </select>
+                                <lable>Facility</lable>
                             </div>
                         </div>
                         <div>
                             <div class="col-md-6">
-                                <lable>CustomerType</lable>
-                                <select th:field="*{customerTypeList}">
-                                    <option th:each="item : ${customerTypeList}" th:value="${item.id}"
+                                <select th:field="*{rentType}">
+                                    <option th:each="item : ${rentType}" th:value="${item.id}"
                                             th:text="${item.name}"></option>
                                 </select>
+                                <lable>Rent</lable>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="text-center text-md-left ">
-                            <input class="btn btn-primary" type="submit" value="Save" />
+                            <input class="btn btn-primary" type="submit" value="Edit"/>
                         </div>
                     </div>
                 </form>
