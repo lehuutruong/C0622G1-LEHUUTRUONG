@@ -1,5 +1,7 @@
 package com.codegym.model.security;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -9,10 +11,12 @@ public class UserRole {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "role_id", referencedColumnName = "id")
     private Role role;

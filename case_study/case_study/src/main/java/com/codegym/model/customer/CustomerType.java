@@ -1,6 +1,7 @@
 package com.codegym.model.customer;
 
 import com.codegym.model.customer.Customer;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -12,6 +13,7 @@ public class CustomerType {
     private int id;
     private String name;
     @OneToMany(mappedBy = "customerTypeList")
+    @JsonBackReference
     private Set<Customer> customerList;
     private int deleteStatus;
     public CustomerType() {

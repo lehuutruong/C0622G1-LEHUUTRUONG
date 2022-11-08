@@ -1,7 +1,15 @@
 package com.codegym.controller;
 
 import com.codegym.dto.ContractDto;
+import com.codegym.dto.CustomerDto;
+import com.codegym.dto.FacilityDto;
+import com.codegym.model.contract.AttachFacility;
 import com.codegym.model.contract.Contract;
+import com.codegym.model.contract.ContractDetail;
+import com.codegym.model.customer.Customer;
+import com.codegym.model.employee.Employee;
+import com.codegym.model.facility.Facility;
+import com.codegym.service.attachFacility.IAttachFacilityService;
 import com.codegym.service.contract.IContractService;
 import com.codegym.service.customer.ICustomerService;
 import com.codegym.service.employee.IEmployeeService;
@@ -13,9 +21,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
 import java.util.function.Function;
 
 @Controller
@@ -29,6 +38,33 @@ public class ContractController {
     private IEmployeeService iEmployeeService;
     @Autowired
     private IContractService iContractService;
+    @Autowired
+    private IAttachFacilityService iAttachFacilityService;
+
+    @ModelAttribute("attachFacilityList")
+    public List<AttachFacility> getListAttachFacility() {
+        return iContractService.getAttachFacilities();
+    }
+
+    @ModelAttribute("facilityList")
+    public List<Facility> getListFacility() {
+        return iFacilityService.findAll();
+    }
+
+    @ModelAttribute("employeeList")
+    public List<Employee> getListEmployee() {
+        return iEmployeeService.getEmployee();
+    }
+
+    @ModelAttribute("customerList")
+    public List<Customer> getListCustomer() {
+        return iCustomerService.getCustomer();
+    }
+
+    @ModelAttribute("contractDetailList")
+    public List<ContractDetail> getListContractDetail() {
+        return iContractService.getListContractDetail();
+    }
 
     @GetMapping
     public String list(Model model,
@@ -48,5 +84,35 @@ public class ContractController {
         });
         model.addAttribute("contractList", contractDtoPage);
         return "contract/contractList";
+    }
+
+    @PostMapping("/create-attach")
+    public String createAttach(@RequestParam(value = "attachId") int attachId,
+                               @RequestParam(value = "quantity") int quantity,
+                               @RequestParam(value = "contractId") int contractId, RedirectAttributes redirectAttributes) {
+
+        ContractDetail contractDetail = new ContractDetail();
+        Contract contract = iContractService.findById(contractId);
+        contractDetail.setContract(contract);
+        contractDetail.setQuantity(quantity);
+        contractDetail.setAttachFacility(iAttachFacilityService.findAttachFacilityId(attachId));
+        iContractService.saveContractDetail(contractDetail);
+        redirectAttributes.addFlashAttribute("message", "Add AttachFacility successfully!");
+        return "redirect:/contract";
+    }
+
+    @GetMapping("/create")
+    public String showCreate(Model model) {
+        model.addAttribute("contractList", new ContractDto());
+        return "contract/contractCreate";
+    }
+
+    @PostMapping("/save")
+    public String create(ContractDto contractDto, RedirectAttributes redirectAttributes) {
+        Contract contract = new Contract();
+        BeanUtils.copyProperties(contractDto, contract);
+        iContractService.create(contract);
+        redirectAttributes.addFlashAttribute("mess", "Add Success!!");
+        return "redirect:/contract";
     }
 }

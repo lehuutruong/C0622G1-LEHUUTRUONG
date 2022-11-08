@@ -1,6 +1,7 @@
 package com.codegym.model.customer;
 
 import com.codegym.model.contract.Contract;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -18,9 +19,11 @@ public class Customer {
     private String email;
     private String address;
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "customer_type_id", referencedColumnName = "id")
     private CustomerType customerTypeList;
     @OneToMany(mappedBy = "customer")
+    @JsonBackReference
     private Set<Contract> contractList;
     private int deleteStatus=1;
     public Customer() {

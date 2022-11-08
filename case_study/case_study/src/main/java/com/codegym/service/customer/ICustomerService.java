@@ -17,4 +17,6 @@ public interface ICustomerService {
     void update(Customer customer);
 
     Page<Customer> search(String nameSearch, String email, String customerType, Pageable pageable);
+
+    List<Customer> getCustomer();
 }

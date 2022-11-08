@@ -51,4 +51,9 @@ public class CustomerService implements ICustomerService {
         return iCustomerRepository.findByNameAndEmailAndCustomerTypeId(nameSearch,email,customerType,pageable);
     }
 
+    @Override
+    public List<Customer> getCustomer() {
+        return iCustomerRepository.findAll();
+    }
+
 }

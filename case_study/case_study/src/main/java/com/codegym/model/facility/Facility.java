@@ -1,6 +1,7 @@
 package com.codegym.model.facility;
 
 import com.codegym.model.contract.Contract;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -18,12 +19,17 @@ public class Facility {
     private double poolArea;
     private int numberOfFloors;
     private String facilityFree;
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "rent_type_id", referencedColumnName = "id")
     private RentType rentType;
+
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "facility_type_id", referencedColumnName = "id")
     private FacilityType facilityType;
+
+    @JsonBackReference
     @OneToMany(mappedBy = "facility")
     private Set<Contract> contractList;
     private int deleteStatus=1;

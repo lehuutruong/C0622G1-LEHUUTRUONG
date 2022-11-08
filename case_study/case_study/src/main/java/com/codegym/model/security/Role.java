@@ -1,5 +1,7 @@
 package com.codegym.model.security;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -12,6 +14,7 @@ public class Role {
     private String name;
     private Integer status = 1;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "role")
     private Set<UserRole> UserRoles;
 

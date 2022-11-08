@@ -1,6 +1,7 @@
 package com.codegym.model.employee;
 
 import com.codegym.model.employee.Employee;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -11,6 +12,7 @@ public class Position {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
+    @JsonBackReference
     @OneToMany(mappedBy = "position")
     private Set<Employee> employeeList;
     private int deleteStatus;

@@ -3,6 +3,8 @@ package com.codegym.model.contract;
 import com.codegym.model.customer.Customer;
 import com.codegym.model.employee.Employee;
 import com.codegym.model.facility.Facility;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -16,15 +18,22 @@ public class Contract {
     private String endDate;
     private double deposit;
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "employee_id", referencedColumnName = "id")
     private Employee employee;
+
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
+
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "facility_id", referencedColumnName = "id")
     private Facility facility;
+
     @OneToMany(mappedBy = "contract")
+    @JsonBackReference
     private Set<ContractDetail> contractDetailList;
 
     private int deleteStatus;

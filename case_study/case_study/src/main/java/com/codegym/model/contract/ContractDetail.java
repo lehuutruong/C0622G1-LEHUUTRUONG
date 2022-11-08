@@ -2,6 +2,7 @@ package com.codegym.model.contract;
 
 import com.codegym.model.contract.AttachFacility;
 import com.codegym.model.contract.Contract;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 
@@ -11,9 +12,11 @@ public class ContractDetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private int quantity;
+
     @ManyToOne
     @JoinColumn(name = "contract_id",referencedColumnName = "id")
     private Contract contract;
+
     @ManyToOne
     @JoinColumn(name = "attach_facility_id",referencedColumnName = "id")
     private AttachFacility attachFacility;

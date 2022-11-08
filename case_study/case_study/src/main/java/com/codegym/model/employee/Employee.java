@@ -2,6 +2,7 @@ package com.codegym.model.employee;
 
 import com.codegym.model.contract.Contract;
 import com.codegym.model.security.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -19,22 +20,27 @@ public class Employee {
     private String email;
     private String address;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "position_id", referencedColumnName = "id")
     private Position position;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "educationDegree_id", referencedColumnName = "id")
     private EducationDegree educationDegree;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "division_id", referencedColumnName = "id")
     private Division division;
 
+    @JsonBackReference
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id",referencedColumnName = "id")
     private User user;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "employee")
     private Set<Contract> contractList;
 
