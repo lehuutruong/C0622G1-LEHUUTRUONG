@@ -1,11 +1,17 @@
 package com.codegym.controller;
 
 import com.codegym.dto.CustomerDto;
+import com.codegym.dto.CustomerHavingBooking;
+import com.codegym.model.contract.Contract;
 import com.codegym.model.customer.Customer;
+import com.codegym.service.contract.IContractService;
 import com.codegym.service.customer.ICustomerService;
 import com.codegym.service.customer.ICustomerTypeService;
+import com.codegym.service.facility.IFacilityService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
@@ -21,12 +27,16 @@ public class CustomerController {
     private ICustomerService iCustomerService;
     @Autowired
     private ICustomerTypeService iCustomerTypeService;
+    @Autowired
+    private IFacilityService iFacilityService;
+    @Autowired
+    private IContractService iContractService;
 
     @GetMapping
-            public ModelAndView showCustomerList(@RequestParam(value = "nameSearch", defaultValue = "") String nameSearch,
-                                                 @RequestParam(value = "email", defaultValue = "") String email,
-                                                 @RequestParam(value = "customerType", defaultValue = "") String customerType,
-                                                 @PageableDefault(value = 3) Pageable pageable) {
+    public ModelAndView showCustomerList(@RequestParam(value = "nameSearch", defaultValue = "") String nameSearch,
+                                         @RequestParam(value = "email", defaultValue = "") String email,
+                                         @RequestParam(value = "customerType", defaultValue = "") String customerType,
+                                         @PageableDefault(value = 3) Pageable pageable) {
         ModelAndView modelAndView = new ModelAndView("customer/customerList");
         modelAndView.addObject("customerList", iCustomerService.search(nameSearch, email, customerType, pageable));
         modelAndView.addObject("customerTypeList", iCustomerTypeService.findAll());
@@ -36,6 +46,7 @@ public class CustomerController {
         return modelAndView;
 
     }
+
     @GetMapping("/create")
     public String showCreate(Model model) {
         model.addAttribute("customerTypeList", iCustomerTypeService.findAll());
@@ -83,4 +94,5 @@ public class CustomerController {
         model.addAttribute("customerList", iCustomerService.findById(id));
         return "/customer/customerView";
     }
+
 }

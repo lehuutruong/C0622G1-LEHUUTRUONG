@@ -1,5 +1,6 @@
 package com.codegym.service.contract.impl;
 
+import com.codegym.dto.CustomerHavingBooking;
 import com.codegym.model.contract.AttachFacility;
 import com.codegym.model.contract.Contract;
 import com.codegym.model.contract.ContractDetail;
@@ -53,6 +54,21 @@ public class ContractService implements IContractService {
     @Override
     public void create(Contract contract) {
         iContractRepository.save(contract);
+    }
+
+    @Override
+    public List<Contract> findAll() {
+        return iContractRepository.findAll();
+    }
+
+    @Override
+    public List<ContractDetail> getContractDetailByCustomer(int id) {
+        return iContractDetailRepository.getListContractDetailByCustomerId(id);
+    }
+
+    @Override
+    public Page<CustomerHavingBooking> useFacility(Pageable pageable) {
+        return iContractRepository.useFacility(pageable);
     }
 
     @Override

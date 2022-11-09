@@ -23,4 +23,13 @@ public class ContractDetailRestController {
         }
         return new ResponseEntity<>(contractDetailList, HttpStatus.OK);
     }
+
+    @GetMapping("customer-using-facility/{id}")
+    public ResponseEntity<List<ContractDetail>> getListContractDetailByCustomerId(@PathVariable int id) {
+        List<ContractDetail> contractDetailList = icontractService.getContractDetailByCustomer(id);
+        if (contractDetailList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(contractDetailList, HttpStatus.OK);
+    }
 }

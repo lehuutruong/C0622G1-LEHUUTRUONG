@@ -1,5 +1,6 @@
 package com.codegym.service.contract;
 
+import com.codegym.dto.CustomerHavingBooking;
 import com.codegym.model.contract.AttachFacility;
 import com.codegym.model.contract.Contract;
 import com.codegym.model.contract.ContractDetail;
@@ -14,7 +15,7 @@ public interface IContractService {
 
     void save(Contract contract);
 
-   Contract findById(int id);
+    Contract findById(int id);
 
     List<AttachFacility> getAttachFacilities();
 
@@ -27,5 +28,9 @@ public interface IContractService {
 
     void create(Contract contract);
 
+    List<Contract> findAll();
 
+    List<ContractDetail> getContractDetailByCustomer(int id);
+
+    Page<CustomerHavingBooking> useFacility(Pageable pageable);
 }

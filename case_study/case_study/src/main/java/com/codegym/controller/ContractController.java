@@ -2,6 +2,7 @@ package com.codegym.controller;
 
 import com.codegym.dto.ContractDto;
 import com.codegym.dto.CustomerDto;
+import com.codegym.dto.CustomerHavingBooking;
 import com.codegym.dto.FacilityDto;
 import com.codegym.model.contract.AttachFacility;
 import com.codegym.model.contract.Contract;
@@ -17,6 +18,7 @@ import com.codegym.service.facility.IFacilityService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
@@ -114,5 +116,12 @@ public class ContractController {
         iContractService.create(contract);
         redirectAttributes.addFlashAttribute("mess", "Add Success!!");
         return "redirect:/contract";
+    }
+
+    @GetMapping("/using")
+    public String showPageUsing(@PageableDefault(value = 3) Pageable pageable,Model model){
+        Page<CustomerHavingBooking> customerHavingBookings=iContractService.useFacility(pageable);
+        model.addAttribute("useFacility",customerHavingBookings);
+        return "/customer/using";
     }
 }

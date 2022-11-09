@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 public interface ICustomerRepository extends JpaRepository<Customer, Integer> {
     @Query(value = "select c.* from `customer` c inner join `customer_type` ct " +
             "on c.customer_type_id = ct.id " +
@@ -15,4 +17,8 @@ public interface ICustomerRepository extends JpaRepository<Customer, Integer> {
                                                      @Param("email") String email,
                                                      @Param("type") String customerType,
                                                      Pageable pageable);
+    @Query(value="select customer.name,contract.start_date,contract.end_date,facility.name from customer join contract on contract.customer_id=customer.id \n" +
+            "                       join facility on contract.facility_id=facility.id\n" +
+            "                       where year(end_date)>=2022 and month(end_date)>=9 and day(end_date)>=11",nativeQuery=true)
+    List<Customer> findUserFacility();
 }

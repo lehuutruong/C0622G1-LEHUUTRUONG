@@ -55,5 +55,4 @@ public class CustomerService implements ICustomerService {
     public List<Customer> getCustomer() {
         return iCustomerRepository.findAll();
     }
-
-}
+   }
