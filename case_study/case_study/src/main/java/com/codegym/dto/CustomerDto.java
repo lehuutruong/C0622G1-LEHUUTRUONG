@@ -1,32 +1,27 @@
 package com.codegym.dto;
 
 import com.codegym.model.customer.CustomerType;
+import com.codegym.service.customer.ICustomerService;
+import com.codegym.service.customer.impl.CustomerService;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import java.util.Collections;
+import java.util.List;
 
 
 public class CustomerDto implements Validator {
     private int id;
-    @NotEmpty(message = "Name is not empty")
     private String name;
-    @NotEmpty(message = "Date Of Birth is not empty")
     private String dateOfBirth;
-    @NotNull(message = "Gender is not empty")
     private int gender;
-    @NotEmpty(message = "Id Card is not empty")
     private String idCard;
-    @NotEmpty(message = "Phone Number is not empty")
     private String phoneNumber;
-    @NotEmpty(message = "Email is not empty")
     private String email;
-    @NotEmpty(message = "Address is not empty")
     private String address;
     private CustomerType customerTypeList;
     private int deleteStatus = 1;
-
+    private List<String> emailList;
     public CustomerDto() {
     }
 
@@ -110,6 +105,14 @@ public class CustomerDto implements Validator {
         this.deleteStatus = deleteStatus;
     }
 
+    public List<String> getEmailList() {
+        return emailList;
+    }
+
+    public void setEmailList(List<String> emailList) {
+        this.emailList = emailList;
+    }
+
     @Override
     public boolean supports(Class<?> clazz) {
         return false;
@@ -118,24 +121,53 @@ public class CustomerDto implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         CustomerDto customerDto = (CustomerDto) target;
-        if (!customerDto.getName().matches("\\p{Lu}\\p{Ll}+(\\s\\p{Lu}\\p{Ll}+)*")) {
-            errors.rejectValue("name", "name", "Name must be not have number and first word must be capitalized");
+        if (customerDto.getName().equals("")) {
+            errors.rejectValue("name", "name", "name is not empty");
+        } else {
+            if (!customerDto.getName().matches("\\p{Lu}\\p{Ll}+(\\s\\p{Lu}\\p{Ll}+)*")) {
+                errors.rejectValue("name", "name", "Name must be not have number and first word must be capitalized");
+            }
+        }
+        if (customerDto.getPhoneNumber().equals("")) {
+            errors.rejectValue("phoneNumber", "phoneNumber", "phone Number is not empty");
+        } else {
+            if (!(customerDto.getPhoneNumber().matches("[0][9][0]\\d{7}") ||
+                    customerDto.getPhoneNumber().matches("[0][9][1]\\d{7}") ||
+                    customerDto.getPhoneNumber().matches("[(][8][4][)][+][9][0]\\d{7}") ||
+                    customerDto.getPhoneNumber().matches("[(][8][4][)][+][9][1]\\d{7}"))) {
+                errors.rejectValue("phoneNumber", "", "Phone number must be valid (090xxxxxxx) hoặc (091xxxxxxx) hoặc (84)+90xxxxxxx hoặc (84)+91xxxxxxx");
+            }
+        }
+        for (String idCard:customerDto.getEmailList()
+             ) {if(idCard.equals(customerDto.getIdCard())){
+                 errors.rejectValue("idCard","idCard","id Card is exists");
         }
 
-        if (!(customerDto.getPhoneNumber().matches("[0][9][0]\\d{7}") ||
-                customerDto.getPhoneNumber().matches("[0][9][1]\\d{7}") ||
-                customerDto.getPhoneNumber().matches("[(][8][4][)][+][9][0]\\d{7}") ||
-                customerDto.getPhoneNumber().matches("[(][8][4][)][+][9][1]\\d{7}"))) {
-            errors.rejectValue("phoneNumber", "phone-number", "Phone number must be valid (090xxxxxxx) hoặc (091xxxxxxx) hoặc (84)+90xxxxxxx hoặc (84)+91xxxxxxx");
         }
-
-        if (!(customerDto.getIdCard().matches("\\d{9}") ||
-                customerDto.getIdCard().matches("\\d{12}"))) {
-            errors.rejectValue("idCard", "id-card", "ID card must be valid (XXXXXXXXX) hoặc (XXXXXXXXXXXX)");
+        if (customerDto.getIdCard().equals("")) {
+            errors.rejectValue("idCard", "idCard", "id Card is not empty");
+        } else {
+            if (!(customerDto.getIdCard().matches("\\d{9}") ||
+                    customerDto.getIdCard().matches("\\d{12}"))) {
+                errors.rejectValue("idCard", "", "ID card must be valid (XXXXXXXXX) hoặc (XXXXXXXXXXXX)");
+            }
         }
+        for (String email:customerDto.emailList
+        ) {
+            if(email.equals(customerDto.getEmail())){
+                errors.rejectValue("email","email","email is exists");
+            }
 
-        if (!customerDto.getEmail().matches("\\w+[@]\\w+[.]\\w+")) {
-            errors.rejectValue("email", "email", "Email must be valid");
+        }
+        if (customerDto.getEmail().equals("")) {
+            errors.rejectValue("email", "email", "Email is not empty");
+        } else {
+            if (!customerDto.getEmail().matches("\\w+[@]\\w+[.]\\w+")) {
+                errors.rejectValue("email", "", "Email must be valid");
+            }
+        }
+        if (customerDto.getAddress().equals("")) {
+            errors.rejectValue("address", "address", "address is not empty");
         }
     }
 }

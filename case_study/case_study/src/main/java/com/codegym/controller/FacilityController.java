@@ -4,6 +4,8 @@ import com.codegym.dto.CustomerDto;
 import com.codegym.dto.FacilityDto;
 import com.codegym.model.customer.Customer;
 import com.codegym.model.facility.Facility;
+import com.codegym.model.facility.FacilityType;
+import com.codegym.model.facility.RentType;
 import com.codegym.service.facility.IFacilityService;
 import com.codegym.service.facility.IFacilityTypeService;
 import com.codegym.service.facility.IRentTypeService;
@@ -13,9 +15,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/facility")
@@ -26,6 +32,14 @@ public class FacilityController {
     private IFacilityTypeService iFacilityTypeService;
     @Autowired
     private IRentTypeService iRentTypeService;
+    @ModelAttribute("facilityTypeList")
+    public List<FacilityType> facilityTypeList(){
+        return  iFacilityTypeService.findAll();
+    }
+    @ModelAttribute("rentType")
+    public List<RentType> rentTypeList(){
+        return  iRentTypeService.finAll();
+    }
     @GetMapping
     public ModelAndView showFacilityList(@RequestParam(value = "nameSearch", defaultValue = "") String nameSearch,
                                          @RequestParam(value = "facilityType", defaultValue = "") String facilityType,
@@ -40,14 +54,16 @@ public class FacilityController {
     }
     @GetMapping("/create")
     public String showCreate(Model model) {
-        model.addAttribute("facilityTypeList", iFacilityTypeService.findAll());
-        model.addAttribute("rentType",iRentTypeService.finAll());
-        model.addAttribute("facilityList", new FacilityDto());
+        model.addAttribute("facilityDto", new FacilityDto());
         return "facility/facilityCreate";
     }
 
     @PostMapping("/save")
-    public String create(FacilityDto facilityDto, RedirectAttributes redirectAttributes) {
+    public String create(@Validated @ModelAttribute FacilityDto facilityDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+         new FacilityDto().validate(facilityDto,bindingResult);
+         if(bindingResult.hasFieldErrors()){
+             return "facility/facilityCreate";
+         }
         Facility facility = new Facility();
         BeanUtils.copyProperties(facilityDto, facility);
         iFacilityService.create(facility);

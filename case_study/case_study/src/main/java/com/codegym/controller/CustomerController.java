@@ -1,24 +1,26 @@
 package com.codegym.controller;
 
 import com.codegym.dto.CustomerDto;
-import com.codegym.dto.CustomerHavingBooking;
-import com.codegym.model.contract.Contract;
 import com.codegym.model.customer.Customer;
+import com.codegym.model.customer.CustomerType;
 import com.codegym.service.contract.IContractService;
 import com.codegym.service.customer.ICustomerService;
 import com.codegym.service.customer.ICustomerTypeService;
 import com.codegym.service.facility.IFacilityService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/customer")
@@ -31,6 +33,11 @@ public class CustomerController {
     private IFacilityService iFacilityService;
     @Autowired
     private IContractService iContractService;
+
+    @ModelAttribute("customerTypeList")
+    public List<CustomerType> listCustomerType() {
+        return iCustomerTypeService.findAll();
+    }
 
     @GetMapping
     public ModelAndView showCustomerList(@RequestParam(value = "nameSearch", defaultValue = "") String nameSearch,
@@ -50,17 +57,29 @@ public class CustomerController {
     @GetMapping("/create")
     public String showCreate(Model model) {
         model.addAttribute("customerTypeList", iCustomerTypeService.findAll());
-        model.addAttribute("customerList", new CustomerDto());
+        model.addAttribute("customerDto", new CustomerDto());
         return "customer/customerCreate";
     }
 
     @PostMapping("/save")
-    public String create(CustomerDto customerDto, RedirectAttributes redirectAttributes) {
-        Customer customer = new Customer();
-        BeanUtils.copyProperties(customerDto, customer);
-        iCustomerService.create(customer);
-        redirectAttributes.addFlashAttribute("mess", "Add Success!!");
-        return "redirect:/customer";
+    public String create(@Validated @ModelAttribute CustomerDto customerDto, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+        List<Customer> customers = iCustomerService.findAll();
+        List<String> emailList = new ArrayList<>();
+        for (Customer item : customers) {
+            emailList.add(item.getEmail());
+            emailList.add(item.getIdCard());
+        }
+        customerDto.setEmailList(emailList);
+       customerDto.validate(customerDto, bindingResult);
+        if (bindingResult.hasFieldErrors()) {
+            return "customer/customerCreate";
+        } else {
+            Customer customer = new Customer();
+            BeanUtils.copyProperties(customerDto, customer);
+            iCustomerService.create(customer);
+            redirectAttributes.addFlashAttribute("mess", "Add Success!!");
+            return "redirect:/customer";
+        }
     }
 
     @GetMapping("{id}/edit")

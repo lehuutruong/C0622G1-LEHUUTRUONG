@@ -139,4 +139,5 @@ public class Facility {
     public void setDeleteStatus(int deleteStatus) {
         this.deleteStatus = deleteStatus;
     }
+
 }

@@ -17,7 +17,7 @@
         <div class="row">
             <div class="col-md-9 mb-md-0 mb-5">
                 <form id="contact-form" name="contact-form" th:action="@{/facility/save}" method="post"
-                      th:object="${facilityList}">
+                      th:object="${facilityDto}">
                     <div class="row">
                         <div class="col-md-12">
                             <input type="hidden" th:field="*{id}" id="id" name="id" class="form-control">
@@ -27,6 +27,9 @@
                         <div class="col-md-6">
                             <div class="md-form mb-0">
                                 <input type="text" th:field="*{name}" id="name" name="name" class="form-control">
+                                <span style="color:red"
+                                      th:errors="*{name}"
+                                      th:if="${#fields.hasErrors('name')}"></span>
                                 <label for="name" class="">Your name</label>
                             </div>
                         </div>
@@ -34,6 +37,7 @@
                             <div class="md-form mb-0">
                                 <input type="text" th:field="*{cost}" id="cost" name="cost"
                                        class="form-control">
+                                <span style="color:red" th:errors="*{cost}" th:if="${#fields.hasErrors('cost')}"></span>
                                 <label for="cost" class="">Cost </label>
                             </div>
                         </div>
@@ -43,6 +47,7 @@
                             <div class="md-form mb-0">
                                 <input type="text" th:field="*{maxPeople}" id="maxPeople" name="maxPeople"
                                        class="form-control">
+                                <span style="color:red" th:errors="*{maxPeople}" th:if="${#fields.hasErrors('maxPeople')}"></span>
                                 <label for="maxPeople" class="">Max People</label>
                             </div>
                         </div>
@@ -53,6 +58,7 @@
                             <textarea type="text" th:field="*{standardRoom}" name="standardRoom"
                                       rows="2"
                                       class="form-control md-textarea"></textarea>
+                                <span style="color:red" th:errors="*{standardRoom}" th:if="${#fields.hasErrors('standardRoom')}"></span>
                                 <label>Standard Room</label>
                             </div>
                         </div>
@@ -63,6 +69,7 @@
                             <textarea type="text" th:field="*{descriptionOtherConvenience}"
                                       id="descriptionOtherConvenience" name="descriptionOtherConvenience" rows="2"
                                       class="form-control md-textarea"></textarea>
+                                <span style="color:red" th:errors="*{descriptionOtherConvenience}" th:if="${#fields.hasErrors('descriptionOtherConvenience')}"></span>
                                 <label for="descriptionOtherConvenience">descriptionOtherConvenience</label>
                             </div>
                         </div>
@@ -72,6 +79,7 @@
                             <div class="md-form">
                             <textarea type="text" th:field="*{poolArea}" name="poolArea" rows="2"
                                       class="form-control md-textarea"></textarea>
+                                <span style="color:red" th:errors="*{poolArea}" th:if="${#fields.hasErrors('poolArea')}"></span>
                                 <label>PoolArea</label>
                             </div>
                         </div>
@@ -81,6 +89,7 @@
                             <div class="md-form">
                             <textarea type="text" th:field="*{numberOfFloors}" name="message" rows="2"
                                       class="form-control md-textarea"></textarea>
+                                <span style="color:red" th:errors="*{numberOfFloors}" th:if="${#fields.hasErrors('numberOfFloors')}"></span>
                                 <label>NumberOfFloors</label>
                             </div>
                         </div>
@@ -90,6 +99,7 @@
                             <div class="md-form">
                             <textarea type="text" th:field="*{facilityFree}" name="poolArea" rows="2"
                                       class="form-control md-textarea"></textarea>
+                                <span style="color:red" th:errors="*{facilityFree}" th:if="${#fields.hasErrors('facilityFree')}"></span>
                                 <label>FacilityFree</label>
                             </div>
                         </div>
